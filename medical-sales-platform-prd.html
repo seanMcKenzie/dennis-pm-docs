@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medical Sales Intelligence &amp; CRM Platform — PRD v1.1</title>
+<style>
+  :root {
+    --primary: #1a3a5c;
+    --accent: #2e7de9;
+    --yellow: #d29922;
+    --red: #cb2431;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --muted: #64748b;
+    --code-bg: #f1f5f9;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 15px; }
+  .header { background: linear-gradient(135deg, #1a3a5c 0%, #2e4a7a 100%); color: white; padding: 48px 40px 40px; border-bottom: 4px solid var(--accent); }
+  .header h1 { font-size: 2rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 6px; }
+  .header .subtitle { font-size: 1.1rem; opacity: 0.8; margin-bottom: 20px; }
+  .meta { display: flex; gap: 14px; flex-wrap: wrap; }
+  .meta span { background: rgba(255,255,255,0.12); padding: 4px 12px; border-radius: 20px; font-size: 0.82rem; }
+  .meta .updated { background: rgba(210,153,34,0.3); }
+  .container { max-width: 1100px; margin: 0 auto; padding: 40px 32px; }
+  .toc { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 24px 28px; margin-bottom: 40px; }
+  .toc h2 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 14px; border: none; margin-top: 0; padding-bottom: 0; }
+  .toc ol { padding-left: 20px; }
+  .toc li { margin: 5px 0; }
+  .toc a { color: var(--accent); text-decoration: none; font-weight: 500; }
+  .toc a:hover { text-decoration: underline; }
+  h1 { display: none; }
+  h2 { font-size: 1.4rem; font-weight: 700; color: var(--primary); margin: 48px 0 16px; padding-bottom: 10px; border-bottom: 2px solid var(--border); }
+  h3 { font-size: 1.05rem; font-weight: 600; color: var(--primary); margin: 28px 0 10px; }
+  h4 { font-size: 0.9rem; font-weight: 600; color: var(--muted); margin: 20px 0 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+  p { margin: 10px 0; }
+  ul, ol { padding-left: 22px; margin: 10px 0; }
+  li { margin: 5px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.87rem; }
+  th { background: var(--primary); color: white; padding: 9px 14px; text-align: left; font-weight: 600; }
+  td { padding: 8px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  tr:hover td { background: #eff6ff; }
+  pre { background: #0f172a; color: #e2e8f0; padding: 20px 24px; border-radius: 8px; overflow-x: auto; margin: 16px 0; font-size: 0.8rem; line-height: 1.6; }
+  code { font-family: 'SF Mono', 'Fira Code', Consolas, monospace; }
+  p code, li code { background: var(--code-bg); padding: 2px 6px; border-radius: 4px; font-size: 0.83rem; color: #be185d; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 36px 0; }
+  strong { color: var(--primary); }
+  .footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 32px; border-top: 1px solid var(--border); margin-top: 60px; }
+  @media (max-width: 768px) { .header { padding: 32px 20px; } .container { padding: 24px 16px; } table { font-size: 0.76rem; } }
+  
+  blockquote { background: #1c2128; border-left: 4px solid var(--yellow); border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; font-size: 0.85rem; color: #cdd9e5; }
+  blockquote strong { color: var(--yellow); }
+  del { color: var(--muted); text-decoration: line-through; }
+  .deferred { opacity: 0.6; }
+  .version-badge { display: inline-block; background: rgba(210,153,34,0.15); color: var(--yellow); font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 10px; margin-left: 8px; vertical-align: middle; }
+  .retired { background: rgba(248,81,73,0.08); border-left-color: var(--red) !important; }
+  .retired strong { color: var(--red); }
+  /* Data Model Cards */
+  .dm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(460px, 1fr)); gap: 16px; margin: 20px 0; }
+  .dm-card { background: #fff; border-radius: 10px; border: 1px solid var(--border); overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .dm-card-header { display: flex; align-items: center; gap: 10px; padding: 11px 16px; border-bottom: 1px solid var(--border); background: #f8fafc; flex-wrap: wrap; }
+  .dm-card-header strong { font-size: 0.9rem; color: var(--primary); }
+  .dm-rel { font-size: 0.75rem; color: var(--muted); margin-left: auto; }
+  .dm-badge { font-size: 0.68rem; font-weight: 700; padding: 2px 8px; border-radius: 10px; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+  .badge-source { background: #dbeafe; color: #1d4ed8; }
+  .badge-medicare { background: #dcfce7; color: #15803d; }
+  .badge-payments { background: #fef9c3; color: #854d0e; }
+  .badge-crm { background: #f3e8ff; color: #6b21a8; }
+  .dm-source .dm-card-header { border-left: 4px solid #2e7de9; }
+  .dm-medicare .dm-card-header { border-left: 4px solid #16a34a; }
+  .dm-payments .dm-card-header { border-left: 4px solid #ca8a04; }
+  .dm-crm .dm-card-header { border-left: 4px solid #9333ea; }
+  .dm-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+  .dm-table tr { border-bottom: 1px solid #f1f5f9; }
+  .dm-table tr:last-child { border-bottom: none; }
+  .dm-table tr:hover { background: #fafbff; }
+  .dm-field { padding: 6px 14px; font-family: 'SF Mono', Consolas, monospace; color: #0f172a; font-weight: 500; width: 42%; vertical-align: top; }
+  .dm-type { padding: 6px 8px; color: #6366f1; font-family: monospace; font-size: 0.75rem; white-space: nowrap; vertical-align: top; }
+  .dm-note { padding: 6px 14px 6px 8px; color: var(--muted); font-size: 0.77rem; vertical-align: top; }
+  .dm-legend { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; margin-top: 14px; padding: 12px 16px; background: #f8fafc; border-radius: 8px; border: 1px solid var(--border); font-size: 0.8rem; color: var(--muted); }
+
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="subtitle">Product Requirements Document</div>
+  <h1>Medical Sales Intelligence &amp; CRM Platform</h1>
+  <div class="meta">
+    <span>📋 Dennis Reynolds, Project Manager</span>
+    <span>📅 February 26, 2026</span>
+    <span>🔖 Version 1.1</span>
+    <span class="updated">✏️ Updated: Route Planning Revision</span>
+  </div>
+</div>
+
+<div class="container">
+
+<div class="toc">
+  <h2>Table of Contents</h2>
+  <ol>
+    <li><a href="#s1">Executive Summary</a></li>
+    <li><a href="#s2">User Personas</a></li>
+    <li><a href="#s3">Functional Requirements</a></li>
+    <li><a href="#s4">Non-Functional Requirements</a></li>
+    <li><a href="#s5">Data Architecture Overview</a></li>
+    <li><a href="#s6">Feature Prioritization</a></li>
+    <li><a href="#s7">Key Technical Risks &amp; Considerations</a></li>
+    <li><a href="#s8">Open Questions</a></li>
+  </ol>
+</div>
+
+<h1>Medical Sales Intelligence & CRM Platform</h1>
+<h2>Product Requirements Document</h2>
+<p><strong>Prepared by:</strong> Dennis Reynolds, Project Manager   <strong>Date:</strong> February 26, 2026   <strong>Version:</strong> 1.1   <strong>Status:</strong> Updated — Route Planning Revision (Feb 26, 2026)</p>
+<h3>Revision History</h3>
+<table><tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr><tr><td>1.0</td><td>Feb 26, 2026</td><td>Dennis Reynolds</td><td>Initial PRD — 48 FRs, 32 NFRs, 8 risks</td></tr><tr><td>1.1</td><td>Feb 26, 2026</td><td>Dennis Reynolds</td><td>Route planning approach revised: FR-022/023 deferred, FR-024/025 replaced by FR-NEW-001 through FR-NEW-005; RISK-008 retired; RISK-NEW-001 and RISK-NEW-002 added; NFR-004 updated; Open Question 9 added</td></tr></table>
+<hr>
+<h2>1. Executive Summary</h2>
+<p>This document defines the requirements for a <strong>Medical Sales Intelligence & CRM Platform</strong> — a mobile-first application designed for pharmaceutical and medical device sales representatives. The platform aggregates publicly available federal healthcare data to produce rich physician profiles, supports territory management and route planning, and provides CRM functionality to track calls, communications, samples, and pipeline activity.</p>
+<p>The core value proposition: a sales rep opens the app, sees every physician within 10 miles, taps any one of them, and immediately knows what they prescribe, what procedures they perform, who's paying them, where they work, and which hospitals they're affiliated with — then logs the call and moves to the next stop.</p>
+<p>The data foundation is entirely built on free, publicly available CMS datasets. No commercial data licensing is required for the core product. This is a significant competitive advantage over legacy pharma data platforms that charge $50,000–$500,000/year for similar data.</p>
+<p><strong>Target Users:</strong> Pharmaceutical sales representatives, medical device sales representatives, territory sales managers, national accounts teams.</p>
+<p><strong>Platform:</strong> Mobile-first (iOS + Android) with a web companion for managers and reporting.</p>
+<hr>
+<h2>2. User Personas</h2>
+<h3>2.1 Pharma Field Rep — Primary User</h3>
+<ul><li><strong>Name:</strong> Sarah, 32, pharmaceutical sales rep</li><li><strong>Territory:</strong> 80–150 physicians across 3–5 counties</li><li><strong>Day:</strong> Drives 100–200 miles/day making 6–10 calls</li><li><strong>Needs:</strong> Know who to call before walking in. Know what they prescribe and whether they're a good target. Log the call fast. Plan the next route.</li><li><strong>Pain points:</strong> Current tools are desktop-only, data is stale, routing is manual, profile data is shallow.</li></ul>
+<h3>2.2 Device Sales Rep — Primary User</h3>
+<ul><li><strong>Name:</strong> Marcus, 38, medical device rep for a surgical robot company</li><li><strong>Territory:</strong> 20–40 surgeons and OR purchasing managers</li><li><strong>Day:</strong> Hospital-heavy. Needs to know procedure volumes, hospital affiliations, who the OR decision-makers are.</li><li><strong>Needs:</strong> Procedure volume data (Part B) is critical. Which surgeons are doing the most laparoscopic cases? Who's already on a competitor's device?</li></ul>
+<h3>2.3 Territory Sales Manager — Secondary User</h3>
+<ul><li><strong>Name:</strong> Linda, 45, manages 8 field reps across a 3-state region</li><li><strong>Day:</strong> Mostly desktop. Reviews rep activity, prioritizes targets, analyzes territory coverage.</li><li><strong>Needs:</strong> See rep activity dashboards. Identify coverage gaps. Pull reports on high-value physician targets the team hasn't contacted.</li></ul>
+<h3>2.4 Sales Operations / Admin — Tertiary User</h3>
+<ul><li>Sets up territories, manages user accounts, exports data for CRM integration, manages system configuration.</li></ul>
+<hr>
+<h2>3. Functional Requirements</h2>
+<h3>3.1 Physician Data & Profiles</h3>
+<p><strong>FR-001</strong> — The system shall maintain a physician master record for every active individual provider in the NPPES NPI Registry (entity type NPI-1, status = Active), comprising approximately 4–5 million individual providers.</p>
+<p><strong>FR-002</strong> — Each physician profile shall display the following identity fields sourced from NPPES: <ul><li>NPI (10-digit)</li><li>Full name (first, middle, last, suffix)</li><li>Credential (MD, DO, NP, PA, etc.)</li><li>Gender</li><li>Primary practice address (street, city, state, ZIP, phone, fax)</li><li>Mailing address (if different from practice)</li><li>Primary specialty (NUCC taxonomy code decoded to plain-English specialty name)</li><li>All secondary specialties (up to 14 additional taxonomy entries)</li><li>State license number(s) and issuing state(s)</li><li>NPI enumeration date and last updated date</li><li>Sole proprietor indicator</li></ul> <strong>FR-003</strong> — Each physician profile shall display the following fields sourced from the CMS Provider Data Catalog (National Downloadable File): <ul><li>Group practice name and PAC ID</li><li>Number of providers in the group practice</li><li>Medical school attended</li><li>Medical school graduation year</li><li>Primary and secondary specialties (CMS plain-English format)</li><li>Telehealth acceptance (Y/N)</li><li>Medicare individual assignment status (accepts assignment Y/N/M)</li><li>Medicare group assignment status</li></ul> <strong>FR-004</strong> — Each physician profile shall display all hospital affiliations sourced from the CMS Facility Affiliation Data file, including facility type (Hospital, FQHC, RHC, etc.) and CMS Certification Number (CCN).</p>
+<p><strong>FR-005</strong> — Each hospital affiliation displayed shall be expandable to show the affiliated hospital's profile data from Hospital Compare General Information, including: hospital name, address, phone, hospital type, ownership type, emergency services availability, and overall CMS star rating (1–5).</p>
+<p><strong>FR-006</strong> — Each physician profile shall display a Medicare Part B Utilization section showing the top procedures billed to Medicare (by HCPCS code), including: procedure code, procedure description, total services billed, total unique beneficiaries, total submitted charges, and total Medicare payment amount. Data shall be sourced from the CMS Medicare Physician & Other Practitioners by Provider and Service dataset (most recent available year).</p>
+<p><strong>FR-007</strong> — Each physician profile shall display a Medicare Part D Prescribing section showing the top drugs prescribed to Medicare patients, including: brand name, generic name, total claims, total 30-day fills, total drug cost, and total beneficiaries. Data shall be sourced from the Medicare Part D Prescribers by Provider and Drug dataset (most recent available year).</p>
+<p><strong>FR-008</strong> — Each physician profile shall display an Industry Payments section sourced from Open Payments General Payment Data, showing: paying company name, nature of payment, total amount, date, and associated drug or device name. The system shall display individual transactions and a rolled-up annual total by company and by nature of payment.</p>
+<p><strong>FR-009</strong> — Each physician profile shall display an Industry Payments summary showing lifetime total payments received (all years 2013–present), broken down by General Payments, Research Payments, and Ownership Interests.</p>
+<p><strong>FR-010</strong> — The system shall display a data freshness indicator on each physician profile showing the source dataset and last update date for each data section (NPPES, Provider Data Catalog, Part B, Part D, Open Payments).</p>
+<p><strong>FR-011</strong> — The system shall support a "flag" or "bookmark" function allowing users to mark physicians for follow-up or custom list building.</p>
+<hr>
+<h3>3.2 Office Locations & Multi-Site Practices</h3>
+<p><strong>FR-012</strong> — The system shall display all practice locations associated with a physician NPI, including cases where the National Downloadable File contains multiple rows for the same NPI (indicating multiple group/address combinations).</p>
+<p><strong>FR-013</strong> — Each practice location shall be displayed on an embedded map with a pin, showing the address, phone number, and driving distance from the user's current location.</p>
+<p><strong>FR-014</strong> — The system shall display the physician's primary practice group and allow navigation to a Group Practice profile showing all other physicians in the same group (matched by org PAC ID from the National Downloadable File).</p>
+<hr>
+<h3>3.3 Search & Filter</h3>
+<p><strong>FR-015</strong> — The system shall provide a physician search function supporting the following filter criteria, usable individually or in combination: <ul><li><strong>Geography:</strong> State, city, ZIP code, or radius from a given point (1–100 miles)</li><li><strong>Specialty:</strong> Single or multi-select from a normalized specialty list (decoded from NPPES taxonomy and/or CMS specialty names)</li><li><strong>Credential:</strong> MD, DO, NP, PA, etc.</li><li><strong>Gender</strong></li><li><strong>Medicare assignment:</strong> Accepts assignment Y/N</li><li><strong>Telehealth:</strong> Accepts telehealth Y/N</li><li><strong>Group practice:</strong> By group name or org PAC ID</li><li><strong>Hospital affiliation:</strong> By hospital name or CCN</li><li><strong>Part B procedure volume:</strong> Filter by HCPCS code + minimum total services threshold (e.g., "surgeons billing CPT 27447 [total knee replacement] ≥ 50 times")</li><li><strong>Part D drug prescribing:</strong> Filter by drug name (brand or generic) + minimum claim count threshold (e.g., "prescribers of Eliquis with ≥ 25 claims")</li><li><strong>Open Payments total:</strong> Filter by minimum total payments received (e.g., "physicians receiving > $10,000/year from any manufacturer")</li><li><strong>Open Payments by company:</strong> Filter by specific paying manufacturer name</li><li><strong>Open Payments by nature:</strong> Filter by nature of payment (consulting fee, speaker fee, etc.)</li></ul> <strong>FR-016</strong> — Search results shall be sortable by: name, specialty, distance from current location, Part B total billing volume, Part D total claim volume, and total Open Payments received.</p>
+<p><strong>FR-017</strong> — The system shall support saving named search filters as "segments" for reuse (e.g., "High-volume cardiologists in my territory").</p>
+<p><strong>FR-018</strong> — The system shall support exporting search results to CSV, including all profile fields visible in the result list.</p>
+<hr>
+<h3>3.4 Location-Aware Features</h3>
+<p><strong>FR-019</strong> — The system shall request and use device GPS location to display a map view of physicians within a configurable radius (default 10 miles, adjustable to 1–100 miles).</p>
+<p><strong>FR-020</strong> — The map view shall display physician pins color-coded by specialty or by CRM status (e.g., green = called this week, yellow = due for follow-up, red = never contacted, grey = not a target).</p>
+<p><strong>FR-021</strong> — Tapping a map pin shall open a brief physician summary card with name, specialty, distance, and CRM last-contact date, with a button to open the full profile.</p>
+<blockquote><strong>⚠️ Version 1.1 Update — Route Planning Approach Revised</strong>
+FR-022 and FR-023 from v1.0 (native routing API engine) have been <strong>deferred</strong> to a future release pending scale validation. FR-024 and FR-025 have been <strong>replaced</strong> by FR-NEW-001 through FR-NEW-005 below. See RISK-008 (retired) and RISK-NEW-001 in Section 7.</blockquote>
+<strong><del>FR-022</del></strong> <em>(DEFERRED — Native Route Calculation Engine)</em> — <del>The system shall provide a Route Planner feature. The user selects 2–15 physician locations and the system generates an optimized driving route minimizing total drive time, using a mapping/routing API (e.g., Google Maps Directions API or Mapbox).</del> Deferred pending scale. Retained in backlog for re-evaluation when platform reaches 500+ active reps.
+<p><strong><del>FR-023</del></strong> <em>(DEFERRED — Routing API Integration)</em> — <del>The route planner shall allow the user to set a starting point (current location or custom address) and an optional ending point (home, office, or custom).</del> Deferred with FR-022.</p>
+<p><strong>FR-NEW-001</strong> — The system shall provide a Route Export feature. The user selects 2–15 physician stops, sets a starting location (current GPS location or custom address), and optionally specifies an available time window. The system generates a pre-filled AI planning prompt containing all stop details and exports it to the clipboard via a "Copy AI Prompt" button.</p>
+<p><strong>FR-NEW-002</strong> — The AI prompt generated by FR-NEW-001 shall include for each stop: physician full name, primary specialty, practice address, CRM priority level, last contact date, and any open follow-up task notes. The prompt shall include a natural-language instruction asking the AI to suggest an optimized driving order and estimated arrival times, and to flag any stops that are significantly out of the way.</p>
+<p><strong>FR-NEW-003</strong> — The system shall generate a Google Maps multi-stop deep-link URL (<code>https://www.google.com/maps/dir/[stop1]/[stop2]/...</code>) for the selected stops in the rep's current manual order. Tapping "Open in Google Maps" shall launch the URL in the Google Maps app or browser.</p>
+<p><strong>FR-NEW-004</strong> — The system shall generate an Apple Maps deep-link URL for the same stops. Tapping "Open in Apple Maps" shall launch the URL in the Apple Maps app (iOS only; this button shall be hidden on Android).</p>
+<p><strong>FR-NEW-005</strong> — Prior to export, the system shall display the selected stops in a drag-reorderable list, allowing the rep to manually set stop sequence before generating the AI prompt or map URLs. The system shall display each stop's CRM priority and driving distance from the previous stop to assist manual ordering.</p>
+<hr>
+<h3>3.5 CRM — Call & Activity Tracking</h3>
+<p><strong>FR-026</strong> — The system shall allow sales reps to log a call/visit against any physician record, capturing: date/time, call type (in-person visit, phone call, email, virtual meeting), outcome (reached, not reached, left message, appointment set), duration, and free-text notes.</p>
+<p><strong>FR-027</strong> — The system shall display a call history log on each physician profile showing all logged interactions by date, with user attribution for team accounts.</p>
+<p><strong>FR-028</strong> — The system shall support attaching a product to a call log entry (from a configurable product catalog maintained by the organization).</p>
+<p><strong>FR-029</strong> — The system shall support logging samples distributed during a call, including product name, quantity, lot number, and expiration date.</p>
+<p><strong>FR-030</strong> — The system shall enforce sample accountability: total samples distributed per product shall be trackable per rep, per period, against a configurable sample budget/allotment.</p>
+<p><strong>FR-031</strong> — The system shall support creating follow-up tasks linked to a physician record, including: due date, task type (call, visit, send materials, etc.), priority, and notes. Tasks shall appear in a unified task list sortable by due date and priority.</p>
+<p><strong>FR-032</strong> — The system shall send push notifications for tasks that are due today or overdue.</p>
+<p><strong>FR-033</strong> — The system shall maintain a communication log supporting: email (manual log entry or via email integration), phone calls (manual log or via call integration), and in-person visit notes.</p>
+<hr>
+<h3>3.6 CRM — Pipeline & Opportunity Tracking</h3>
+<p><strong>FR-034</strong> — The system shall support creating an Opportunity record linked to a physician, capturing: product of interest, estimated order value, stage (prospect, engaged, trial, committed, closed-won, closed-lost), expected close date, and notes.</p>
+<p><strong>FR-035</strong> — Opportunity stages shall be configurable by organization administrators.</p>
+<p><strong>FR-036</strong> — The system shall display a pipeline view (kanban or list) showing all open opportunities by stage, filterable by rep, territory, and product.</p>
+<p><strong>FR-037</strong> — The system shall support logging an Order against a physician record, capturing: product, quantity, order date, order value, and order number/reference.</p>
+<p><strong>FR-038</strong> — The system shall display a rep dashboard showing: calls logged this week/month, physicians contacted, samples distributed, open opportunities by stage, and orders closed.</p>
+<p><strong>FR-039</strong> — The system shall display a manager dashboard showing the same metrics rolled up across all reps in the manager's team, with drill-down by individual rep.</p>
+<hr>
+<h3>3.7 Territory Management</h3>
+<p><strong>FR-040</strong> — The system shall support defining sales territories by geographic boundaries (state, county, ZIP code list, or drawn polygon on a map).</p>
+<p><strong>FR-041</strong> — Each rep account shall be assigned to one or more territories. Physician search and map views shall default to the rep's assigned territory.</p>
+<p><strong>FR-042</strong> — The system shall support a target list function: administrators or managers can assign specific physician NPIs to a rep's target list, overriding or supplementing geographic territory assignment.</p>
+<p><strong>FR-043</strong> — The system shall provide a territory coverage report showing: total physicians in territory, physicians contacted at least once, physicians contacted in the last 30/60/90 days, and physicians never contacted.</p>
+<hr>
+<h3>3.8 Data Refresh & Administration</h3>
+<p><strong>FR-044</strong> — The system shall support automated ingestion of updated CMS data files on the following schedule: <ul><li>NPPES NPI Bulk Download: monthly (full file) + weekly (incremental)</li><li>CMS Provider Data Catalog: quarterly</li><li>CMS Facility Affiliation Data: quarterly</li><li>Medicare Part B Utilization: annually</li><li>Medicare Part D Prescribers: annually</li><li>Open Payments: annually</li></ul> <strong>FR-045</strong> — The system shall maintain a data lineage log showing when each source dataset was last successfully ingested and processed.</p>
+<p><strong>FR-046</strong> — Organization administrators shall be able to manage user accounts, assign roles (rep, manager, admin), and configure territories.</p>
+<p><strong>FR-047</strong> — The system shall support a configurable product catalog: product name, description, therapeutic area, and associated HCPCS/NDC codes (to link to Part B/Part D data).</p>
+<p><strong>FR-048</strong> — The system shall support data export of CRM activity logs (calls, tasks, opportunities, orders) in CSV format for integration with external systems (Salesforce, Veeva, etc.).</p>
+<hr>
+<h2>4. Non-Functional Requirements</h2>
+<h3>4.1 Performance</h3>
+<p><strong>NFR-001</strong> — Physician profile pages shall load within 2 seconds on a 4G mobile connection under normal load conditions.</p>
+<p><strong>NFR-002</strong> — Search results for geography-based queries (radius search) shall return within 3 seconds for radii up to 50 miles.</p>
+<p><strong>NFR-003</strong> — Map view with physician pins shall render within 2 seconds for up to 500 visible pins in the viewport.</p>
+<p><strong>NFR-004</strong> — <em>(Updated v1.1)</em> The route export feature (AI prompt generation + Google Maps and Apple Maps URL generation) for up to 15 stops shall complete within 1 second of the user tapping export. No external API call is required for generation.</p>
+<p><strong>NFR-005</strong> — The system shall support at least 10,000 concurrent active users without degradation in response times.</p>
+<p><strong>NFR-006</strong> — Batch data ingestion jobs (monthly NPPES full file ~8GB uncompressed) shall complete within 4 hours of file availability.</p>
+<h3>4.2 Scalability</h3>
+<p><strong>NFR-007</strong> — The physician database shall support storage and querying of at least 10 million physician records (covering current active NPI count plus historical records).</p>
+<p><strong>NFR-008</strong> — The system shall support horizontal scaling of the API layer to handle traffic spikes (e.g., Monday morning when all reps start their week simultaneously).</p>
+<p><strong>NFR-009</strong> — The CRM data model shall support at least 100 million call log entries without performance degradation in query response times.</p>
+<h3>4.3 Availability & Reliability</h3>
+<p><strong>NFR-010</strong> — The system shall maintain 99.9% uptime (≤ 8.7 hours downtime/year) for the mobile API and web application, excluding scheduled maintenance windows.</p>
+<p><strong>NFR-011</strong> — Scheduled maintenance windows shall not occur during business hours (8am–6pm local time, Monday–Friday, across all US time zones).</p>
+<p><strong>NFR-012</strong> — The system shall implement automated backups of all CRM data with a Recovery Point Objective (RPO) of 1 hour and a Recovery Time Objective (RTO) of 4 hours.</p>
+<h3>4.4 Security</h3>
+<p><strong>NFR-013</strong> — All data in transit shall be encrypted using TLS 1.2 or higher.</p>
+<p><strong>NFR-014</strong> — All data at rest shall be encrypted using AES-256.</p>
+<p><strong>NFR-015</strong> — User authentication shall support username/password with multi-factor authentication (MFA). SSO via SAML 2.0 or OAuth 2.0 shall be supported for enterprise customers.</p>
+<p><strong>NFR-016</strong> — The system shall implement role-based access control (RBAC) with at minimum three roles: Rep (own data only), Manager (team data), Admin (full organization).</p>
+<p><strong>NFR-017</strong> — All API endpoints shall require authenticated sessions. API keys shall be supported for system integrations.</p>
+<p><strong>NFR-018</strong> — The system shall log all administrative actions and data export events for audit purposes. Audit logs shall be retained for a minimum of 2 years.</p>
+<p><strong>NFR-019</strong> — The system shall support organization-level data isolation — one organization's CRM data shall never be accessible to another organization's users.</p>
+<h3>4.5 Compliance</h3>
+<p><strong>NFR-020</strong> — <strong>HIPAA:</strong> The platform does not store or process Protected Health Information (PHI). The physician data sourced from CMS datasets is provider data, not patient data, and is publicly available. CRM data (call logs, notes, orders) is sales activity data about physicians as business contacts, not patients. The system does not require a HIPAA Business Associate Agreement for its core functionality. <strong>However</strong>, if the system stores any information that could be considered PHI in the future (e.g., patient-level outcomes data), a full HIPAA compliance review must be conducted before that feature is deployed.</p>
+<p><strong>NFR-021</strong> — <strong>Data Use:</strong> All CMS data used (NPPES, Provider Data Catalog, Part B, Part D, Open Payments) is publicly available and free to use without a data use agreement. The system shall not sublicense or resell the raw CMS data.</p>
+<p><strong>NFR-022</strong> — <strong>AMA Opt-Out (PDRP):</strong> The Medicare Part D prescribing data is published by CMS and is public. The AMA Physician Data Restriction Program (PDRP) applies to commercial prescription data vendors (IQVIA, Symphony), not to CMS's own public publications. No PDRP compliance obligation applies to the Part D public data used here.</p>
+<p><strong>NFR-023</strong> — <strong>CCPA / State Privacy:</strong> The platform handles publicly available professional data about physicians in their professional capacity. This is generally not considered personal data subject to CCPA for commercial purposes. Legal review is recommended before launch in California.</p>
+<p><strong>NFR-024</strong> — <strong>SOC 2 Type II:</strong> The platform shall achieve SOC 2 Type II certification within 18 months of launch, covering Security, Availability, and Confidentiality trust service categories.</p>
+<h3>4.6 Mobile Requirements</h3>
+<p><strong>NFR-025</strong> — The mobile application shall be available natively on iOS (minimum iOS 16) and Android (minimum Android 12).</p>
+<p><strong>NFR-026</strong> — Core features shall function in offline mode (no network connection), including: viewing recently accessed physician profiles, logging call notes, and viewing the day's planned route. Data shall sync when connectivity is restored.</p>
+<p><strong>NFR-027</strong> — The mobile app shall support GPS location access for nearby physician search and route planning.</p>
+<p><strong>NFR-028</strong> — The mobile app shall support push notifications for task reminders and manager alerts.</p>
+<p><strong>NFR-029</strong> — The mobile app shall pass Apple App Store and Google Play Store review requirements without policy exceptions.</p>
+<h3>4.7 Data Quality</h3>
+<p><strong>NFR-030</strong> — The system shall deduplicate physician records across source datasets using NPI as the canonical key. Conflicting field values across sources shall be resolved using a defined precedence order (documented in data architecture).</p>
+<p><strong>NFR-031</strong> — The system shall validate NPI format (10 digits, passing Luhn checksum) on all imported records. Invalid NPIs shall be flagged and quarantined, not imported.</p>
+<p><strong>NFR-032</strong> — The system shall display data vintage prominently — specifically, Part B and Part D data is 18–24 months old at time of publication. Users must be informed of the data year displayed.</p>
+<hr>
+<h2>5. Data Architecture Overview</h2>
+<h3>5.1 Source Datasets & Ingestion</h3>
+<table><tr><th>Dataset</th><th>Source</th><th>Format</th><th>Frequency</th><th>Size (approx)</th><th>Join Key</th></tr><tr><td>NPPES NPI Registry</td><td>download.cms.gov/nppes</td><td>CSV</td><td>Monthly (full) + Weekly (delta)</td><td>8–10 GB</td><td>NPI</td></tr><tr><td>Provider Data Catalog — National Downloadable File</td><td>data.cms.gov/provider-data</td><td>CSV</td><td>Quarterly</td><td>~500 MB</td><td>NPI, org_pac_id</td></tr><tr><td>Facility Affiliation Data</td><td>data.cms.gov/provider-data</td><td>CSV</td><td>Quarterly</td><td>~200 MB</td><td>NPI, CCN</td></tr><tr><td>Hospital Compare — General Information</td><td>data.cms.gov/provider-data</td><td>CSV</td><td>Quarterly</td><td>~5 MB</td><td>CCN</td></tr><tr><td>Medicare Part B — By Provider & Service</td><td>data.cms.gov</td><td>CSV</td><td>Annual</td><td>~2–3 GB</td><td>NPI</td></tr><tr><td>Medicare Part D — By Provider</td><td>data.cms.gov</td><td>CSV</td><td>Annual</td><td>~500 MB</td><td>NPI</td></tr><tr><td>Medicare Part D — By Provider & Drug</td><td>data.cms.gov</td><td>CSV</td><td>Annual</td><td>~3 GB</td><td>NPI</td></tr><tr><td>Open Payments — General</td><td>download.cms.gov/openpayments</td><td>CSV</td><td>Annual</td><td>~2 GB</td><td>NPI</td></tr><tr><td>Open Payments — Research</td><td>download.cms.gov/openpayments</td><td>CSV</td><td>Annual</td><td>~500 MB</td><td>NPI (as PI)</td></tr><tr><td>Open Payments — Ownership</td><td>download.cms.gov/openpayments</td><td>CSV</td><td>Annual</td><td>~50 MB</td><td>NPI</td></tr></table>
+<h3>5.2 Core Data Model</h3>
+<p>All tables join on <code>npi</code> as the primary key. CRM tables are isolated per organization via <code>org_id</code>.</p>
+<div class="dm-grid">
+  <div class="dm-card dm-source"><div class="dm-card-header"><span class="dm-badge badge-source">Core</span><strong>Physician</strong><span class="dm-rel">master record</span></div><table class="dm-table"><tr><td class="dm-field">npi</td><td class="dm-type">VARCHAR(10)</td><td class="dm-note">PK — primary key across all datasets</td></tr><tr><td class="dm-field">last_name / first_name / middle_name</td><td class="dm-type">VARCHAR</td><td class="dm-note">NPPES</td></tr><tr><td class="dm-field">credential</td><td class="dm-type">VARCHAR</td><td class="dm-note">MD, DO, NP, PA, etc.</td></tr><tr><td class="dm-field">gender</td><td class="dm-type">CHAR(1)</td><td class="dm-note">M / F</td></tr><tr><td class="dm-field">status</td><td class="dm-type">CHAR(1)</td><td class="dm-note">A = Active, D = Deactivated</td></tr><tr><td class="dm-field">enumeration_date / last_updated_nppes</td><td class="dm-type">DATE</td><td class="dm-note">NPI lifecycle dates</td></tr></table></div>
+  <div class="dm-card dm-source"><div class="dm-card-header"><span class="dm-badge badge-source">1:many</span><strong>PhysicianAddress</strong><span class="dm-rel">→ Physician (npi)</span></div><table class="dm-table"><tr><td class="dm-field">address_purpose</td><td class="dm-type">VARCHAR</td><td class="dm-note">LOCATION or MAILING</td></tr><tr><td class="dm-field">address_line_1 / _2, city, state, zip5</td><td class="dm-type">VARCHAR</td><td class="dm-note"></td></tr><tr><td class="dm-field">phone / fax</td><td class="dm-type">VARCHAR</td><td class="dm-note"></td></tr><tr><td class="dm-field">geo_lat / geo_lng</td><td class="dm-type">DECIMAL</td><td class="dm-note">Geocoded — required for map &amp; radius search</td></tr></table></div>
+  <div class="dm-card dm-source"><div class="dm-card-header"><span class="dm-badge badge-source">1:many</span><strong>PhysicianTaxonomy</strong><span class="dm-rel">→ Physician (npi)</span></div><table class="dm-table"><tr><td class="dm-field">taxonomy_code</td><td class="dm-type">VARCHAR</td><td class="dm-note">NUCC code (e.g. 207R00000X)</td></tr><tr><td class="dm-field">taxonomy_desc</td><td class="dm-type">VARCHAR</td><td class="dm-note">Plain English (e.g. "Internal Medicine")</td></tr><tr><td class="dm-field">is_primary</td><td class="dm-type">BOOLEAN</td><td class="dm-note">Only one TRUE per physician</td></tr><tr><td class="dm-field">license_number / license_state</td><td class="dm-type">VARCHAR</td><td class="dm-note">State medical license</td></tr></table></div>
+  <div class="dm-card dm-source"><div class="dm-card-header"><span class="dm-badge badge-source">1:1</span><strong>PhysicianCMSProfile</strong><span class="dm-rel">→ Physician (npi)</span></div><table class="dm-table"><tr><td class="dm-field">ind_pac_id</td><td class="dm-type">VARCHAR</td><td class="dm-note">Medicare PAC ID</td></tr><tr><td class="dm-field">group_name / org_pac_id / num_org_members</td><td class="dm-type">VARCHAR / INT</td><td class="dm-note">Group practice info</td></tr><tr><td class="dm-field">medical_school / grad_year</td><td class="dm-type">VARCHAR / INT</td><td class="dm-note"></td></tr><tr><td class="dm-field">accepts_telehealth</td><td class="dm-type">BOOLEAN</td><td class="dm-note"></td></tr><tr><td class="dm-field">ind_assignment / grp_assignment</td><td class="dm-type">CHAR(1)</td><td class="dm-note">Y / N / M — Medicare assignment</td></tr></table></div>
+  <div class="dm-card dm-source"><div class="dm-card-header"><span class="dm-badge badge-source">1:many</span><strong>HospitalAffiliation</strong><span class="dm-rel">→ Physician → Hospital</span></div><table class="dm-table"><tr><td class="dm-field">npi</td><td class="dm-type">FK</td><td class="dm-note">→ Physician</td></tr><tr><td class="dm-field">ccn</td><td class="dm-type">VARCHAR(6)</td><td class="dm-note">FK → Hospital (CMS Cert Number)</td></tr><tr><td class="dm-field">facility_type</td><td class="dm-type">VARCHAR</td><td class="dm-note">Hospital, FQHC, RHC, etc.</td></tr></table></div>
+  <div class="dm-card dm-source"><div class="dm-card-header"><span class="dm-badge badge-source">Core</span><strong>Hospital</strong><span class="dm-rel">master record</span></div><table class="dm-table"><tr><td class="dm-field">ccn</td><td class="dm-type">VARCHAR(6)</td><td class="dm-note">PK — CMS Certification Number</td></tr><tr><td class="dm-field">name / address / city / state / zip</td><td class="dm-type">VARCHAR</td><td class="dm-note"></td></tr><tr><td class="dm-field">hospital_type / ownership_type</td><td class="dm-type">VARCHAR</td><td class="dm-note">Acute Care, Non-profit, etc.</td></tr><tr><td class="dm-field">overall_star_rating</td><td class="dm-type">INT</td><td class="dm-note">1–5 CMS star rating</td></tr><tr><td class="dm-field">geo_lat / geo_lng</td><td class="dm-type">DECIMAL</td><td class="dm-note">Geocoded</td></tr></table></div>
+  <div class="dm-card dm-medicare"><div class="dm-card-header"><span class="dm-badge badge-medicare">1:many</span><strong>PartBService</strong><span class="dm-rel">→ Physician (npi)</span></div><table class="dm-table"><tr><td class="dm-field">data_year</td><td class="dm-type">INT</td><td class="dm-note">Reporting year (currently 2023)</td></tr><tr><td class="dm-field">hcpcs_code / hcpcs_desc</td><td class="dm-type">VARCHAR</td><td class="dm-note">Procedure code + description</td></tr><tr><td class="dm-field">total_services / total_beneficiaries</td><td class="dm-type">INT</td><td class="dm-note">Volume metrics</td></tr><tr><td class="dm-field">total_submitted_charges / total_medicare_payment</td><td class="dm-type">DECIMAL</td><td class="dm-note">Billed vs paid</td></tr></table></div>
+  <div class="dm-card dm-medicare"><div class="dm-card-header"><span class="dm-badge badge-medicare">1:many</span><strong>PartDDrug</strong><span class="dm-rel">→ Physician (npi)</span></div><table class="dm-table"><tr><td class="dm-field">data_year</td><td class="dm-type">INT</td><td class="dm-note">Reporting year (currently 2023)</td></tr><tr><td class="dm-field">brand_name / generic_name</td><td class="dm-type">VARCHAR</td><td class="dm-note">e.g. Eliquis / Apixaban</td></tr><tr><td class="dm-field">total_claims / total_30day_fills</td><td class="dm-type">INT / DECIMAL</td><td class="dm-note">Prescribing volume</td></tr><tr><td class="dm-field">total_drug_cost</td><td class="dm-type">DECIMAL</td><td class="dm-note">Total cost to Medicare</td></tr><tr><td class="dm-field">opioid_flag</td><td class="dm-type">BOOLEAN</td><td class="dm-note"></td></tr></table></div>
+  <div class="dm-card dm-payments"><div class="dm-card-header"><span class="dm-badge badge-payments">1:many</span><strong>OpenPaymentsGeneral</strong><span class="dm-rel">→ Physician (npi)</span></div><table class="dm-table"><tr><td class="dm-field">record_id</td><td class="dm-type">VARCHAR</td><td class="dm-note">PK — CMS record ID</td></tr><tr><td class="dm-field">program_year</td><td class="dm-type">INT</td><td class="dm-note">2013–2024 available</td></tr><tr><td class="dm-field">manufacturer_name / manufacturer_id</td><td class="dm-type">VARCHAR</td><td class="dm-note">Paying pharma/device company</td></tr><tr><td class="dm-field">payment_amount / payment_date</td><td class="dm-type">DECIMAL / DATE</td><td class="dm-note"></td></tr><tr><td class="dm-field">nature_of_payment</td><td class="dm-type">VARCHAR</td><td class="dm-note">Consulting Fee, Speaker Fee, Royalty, etc.</td></tr><tr><td class="dm-field">product_name_1 / product_ndc_1</td><td class="dm-type">VARCHAR</td><td class="dm-note">Drug or device linked to payment</td></tr></table></div>
+  <div class="dm-card dm-crm"><div class="dm-card-header"><span class="dm-badge badge-crm">CRM</span><strong>CRMCall</strong><span class="dm-rel">per-org, isolated</span></div><table class="dm-table"><tr><td class="dm-field">org_id / user_id</td><td class="dm-type">UUID FK</td><td class="dm-note">Org isolation + rep attribution</td></tr><tr><td class="dm-field">npi</td><td class="dm-type">FK</td><td class="dm-note">→ Physician visited</td></tr><tr><td class="dm-field">call_type</td><td class="dm-type">VARCHAR</td><td class="dm-note">In-person, phone, email, virtual</td></tr><tr><td class="dm-field">outcome</td><td class="dm-type">VARCHAR</td><td class="dm-note">Reached, not-reached, appt-set, etc.</td></tr><tr><td class="dm-field">duration_minutes / notes / product_id</td><td class="dm-type">mixed</td><td class="dm-note"></td></tr></table></div>
+  <div class="dm-card dm-crm"><div class="dm-card-header"><span class="dm-badge badge-crm">CRM</span><strong>CRMTask &amp; CRMOpportunity</strong><span class="dm-rel">per-org, isolated</span></div><table class="dm-table"><tr><td class="dm-field">CRMTask: task_type, due_date, priority, completed</td><td class="dm-type"></td><td class="dm-note">Follow-up reminders per physician</td></tr><tr><td class="dm-field">CRMOpportunity: product_id, stage, estimated_value, expected_close_date</td><td class="dm-type"></td><td class="dm-note">Pipeline tracking — Prospect → Closed</td></tr></table></div>
+  <div class="dm-card dm-crm"><div class="dm-card-header"><span class="dm-badge badge-crm">CRM</span><strong>CRMOrder &amp; CRMSample</strong><span class="dm-rel">per-org, isolated</span></div><table class="dm-table"><tr><td class="dm-field">CRMOrder: product, qty, order_value, order_date, order_reference</td><td class="dm-type"></td><td class="dm-note">Closed orders per physician</td></tr><tr><td class="dm-field">CRMSample: call_id, product, qty, lot_number, expiration_date</td><td class="dm-type"></td><td class="dm-note">Sample accountability — linked to the call</td></tr></table></div>
+</div>
+<div class="dm-legend">
+  <span><span class="dm-badge badge-source">Core</span> Source data from CMS (public)</span>
+  <span><span class="dm-badge badge-medicare">Medicare</span> Utilization data (annual)</span>
+  <span><span class="dm-badge badge-payments">Payments</span> Open Payments (annual)</span>
+  <span><span class="dm-badge badge-crm">CRM</span> Per-org isolated tables</span>
+</div>
+<h3>5.3 Geocoding</h3>
+<p>All physician practice addresses and hospital addresses must be geocoded (lat/lng) to support radius search and map display. Use a geocoding API (Google Maps Geocoding API or Mapbox Geocoding API). Geocode on initial import; re-geocode on address change. Budget for ~5 million geocoding calls on initial load, then incremental on updates.</p>
+<h3>5.4 Search Infrastructure</h3>
+<p>Geography-based radius search requires geospatial indexing. Options: <ul><li><strong>PostgreSQL + PostGIS</strong> — <code>ST_DWithin()</code> with a geography index. Handles millions of points with sub-second radius queries. Recommended for v1.</li><li><strong>Elasticsearch with geo_point</strong> — Better for full-text + geo hybrid queries. Consider for v2 if multi-attribute search performance becomes a bottleneck.</li></ul> Full-text search on physician name and organization name requires a text search index. PostgreSQL <code>pg_trgm</code> or Elasticsearch.</p>
+<hr>
+<h2>6. Feature Prioritization</h2>
+<h3>MVP (Phase 1) — Core Intelligence + Basic CRM</h3>
+<table><tr><th>Feature</th><th>Priority</th><th>Notes</th></tr><tr><td>Physician profile (NPPES + Provider Data Catalog)</td><td>P0</td><td>Foundation — nothing works without this</td></tr><tr><td>Hospital affiliations display</td><td>P0</td><td></td></tr><tr><td>Specialty + location search & filter</td><td>P0</td><td></td></tr><tr><td>Nearby physicians map view (GPS)</td><td>P0</td><td>Core differentiator</td></tr><tr><td>Part B billing summary per physician</td><td>P1</td><td>Annual data only</td></tr><tr><td>Part D prescribing summary per physician</td><td>P1</td><td>Annual data only</td></tr><tr><td>Open Payments summary per physician</td><td>P1</td><td></td></tr><tr><td>Call logging</td><td>P0</td><td></td></tr><tr><td>Task / follow-up tracking</td><td>P0</td><td></td></tr><tr><td>Push notifications for tasks</td><td>P1</td><td></td></tr><tr><td>Route export — AI prompt + Google/Apple Maps URLs (FR-NEW-001 to FR-NEW-005)</td><td>P1</td><td>Replaces native routing for v1</td></tr><tr><td>Native route optimization engine (FR-022, FR-023)</td><td>DEFERRED</td><td>Re-evaluate at 500+ reps</td></tr><tr><td>Rep dashboard</td><td>P1</td><td></td></tr><tr><td>Basic territory assignment</td><td>P1</td><td></td></tr></table>
+<h3>Phase 2 — Enhanced CRM + Analytics</h3>
+<table><tr><th>Feature</th><th>Priority</th></tr><tr><td>Opportunity / pipeline tracking</td><td>P2</td></tr><tr><td>Sample accountability tracking</td><td>P2</td></tr><tr><td>Order logging</td><td>P2</td></tr><tr><td>Manager dashboard + team roll-up</td><td>P2</td></tr><tr><td>Saved search segments</td><td>P2</td></tr><tr><td>CSV export (search results + CRM data)</td><td>P2</td></tr><tr><td>Offline mode (mobile)</td><td>P2</td></tr><tr><td>Advanced Part B/D filtering (by specific procedure/drug)</td><td>P2</td></tr><tr><td>Open Payments filter by company / nature</td><td>P2</td></tr><tr><td>Group practice profiles</td><td>P2</td></tr></table>
+<h3>Phase 3 — Enterprise + Integrations</h3>
+<table><tr><th>Feature</th></tr><tr><td>SSO / SAML 2.0</td></tr><tr><td>Salesforce / Veeva CRM export integration</td></tr><tr><td>Email integration (log emails automatically)</td></tr><tr><td>Web companion app (manager-focused)</td></tr><tr><td>SOC 2 certification</td></tr><tr><td>Multi-product catalog support</td></tr><tr><td>Territory polygon drawing on map</td></tr><tr><td>Custom physician scoring / weighting engine</td></tr><tr><td>DEA number lookup (via paid service like DEA Lookup.com)</td></tr></table>
+<hr>
+<h2>7. Key Technical Risks & Considerations</h2>
+<p><strong>RISK-001 — Data Staleness</strong> Part B and Part D data is published 18–24 months after the reporting year. A rep looking at Part D data today is seeing 2023 prescribing patterns. This is a known limitation of the free data. Mitigation: display the data year prominently everywhere it appears. Consider supplementing with IQVIA or Symphony data if budget allows (Phase 3 option).</p>
+<p><strong>RISK-002 — NPPES Address Quality</strong> NPPES addresses are self-reported by providers and are not always current. A physician who moved practices 2 years ago may still show the old address. Mitigation: cross-reference NPPES address with Provider Data Catalog address and surface discrepancies. Flag records where NPPES and Provider Data Catalog addresses differ.</p>
+<p><strong>RISK-003 — Geocoding Cost and Accuracy</strong> Initial geocoding of ~5 million addresses will cost approximately $25,000 at standard Google Maps API rates ($5/1,000 calls). Ongoing monthly geocoding of ~200,000 updated records costs ~$1,000/month. Mitigation: negotiate volume pricing with Google or evaluate Mapbox (lower per-call pricing). Cache aggressively — only re-geocode when address changes.</p>
+<p><strong>RISK-004 — DEA Number Gap</strong> DEA numbers are not available in any free public dataset. NPPES does not include DEA numbers. For pharmaceutical reps whose workflow requires DEA verification, this is a gap. Mitigation: note the gap in v1, add DEA Lookup.com API integration in Phase 3. Estimated cost ~$200–500/month.</p>
+<p><strong>RISK-005 — Specialty Normalization</strong> Three datasets (NPPES, Provider Data Catalog, Open Payments) use three different specialty naming conventions. NPPES uses NUCC taxonomy codes, Provider Data Catalog uses CMS plain-English specialty names, Open Payments uses a pipe-delimited "Category|Specialty" format. A specialty normalization mapping table is required to enable consistent filtering across datasets.</p>
+<p><strong>RISK-006 — NPI Matching Across Datasets</strong> Most records join cleanly on NPI. However, some Open Payments records have blank or incorrect NPIs (name-matching was used historically). Approximately 3–5% of payment records may not join cleanly to an NPI. Mitigation: implement a name+state fuzzy matching fallback for unmatched Open Payments records, with a low-confidence flag.</p>
+<p><strong>RISK-007 — CMS Dataset Format Changes</strong> CMS has broken downstream integrations before (Socrata → ODA migration in 2021, NPPES V1 → V2 in 2026). The ingestion pipeline must be monitored and must include automated schema validation that alerts on unexpected field changes before data is committed to production.</p>
+<p><strong><del>RISK-008</del></strong> <em>(RETIRED — v1.1)</em> — <del>Route Planning API Costs. Google Maps Directions API charges per request. Optimizing a 10-stop route requires multiple API calls. At scale (10,000 reps, 5 routes/week each), this could reach $50,000+/month at standard rates.</del> <strong>Risk eliminated.</strong> The v1.1 route export approach (FR-NEW-001 through FR-NEW-005) requires no routing API. AI prompt generation and map deep-link URL construction are performed entirely client-side at zero marginal cost. Risk is re-opened if/when the native routing engine (FR-022, FR-023) is undeferred.</p>
+<p><strong>RISK-NEW-001 — AI Hallucination & Liability in Route Recommendations</strong> The AI prompt export feature (FR-NEW-001) delegates route optimization logic to a third-party AI tool (Claude, ChatGPT, etc.) that the rep uses independently. If an AI assistant returns an incorrect route, bad address, or poor sequencing advice, the rep may waste significant time or miss calls. The app has no control over the quality of the AI's output. Mitigation: (1) the AI prompt template shall include a disclaimer: <em>"Verify all addresses before navigating. This data is sourced from federal records and may not reflect recent changes."</em> (2) App UI shall display a note that the AI prompt is provided as a planning aid and that the app does not endorse or guarantee AI-generated routing advice. (3) Legal should review whether the prompt export workflow creates any implied warranty of routing accuracy.</p>
+<p><strong>RISK-NEW-002 — Data Privacy in AI Prompt Export</strong> When a rep pastes the generated AI prompt into a consumer AI tool (ChatGPT, Claude.ai, etc.), physician names, addresses, specialties, and CRM activity data leave the organization's controlled environment. This data is publicly available (CMS sources), but CRM notes added by the rep may contain sensitive business information. Mitigation: (1) add a visible warning in the Route Export UI: <em>"The copied prompt contains physician data and your CRM notes. Do not paste into AI tools on networks subject to your organization's data handling policies."</em> (2) Document this data flow in the Terms of Service. (3) Organizations with strict data policies may wish to disable the AI prompt export feature via an admin setting — this should be a configurable toggle.</p>
+<hr>
+<h2>8. Open Questions for Sean</h2>
+<ol><li><strong>Commercial data supplement:</strong> The free CMS data is 18–24 months stale for Part B/D. Is there budget to add a commercial data layer (IQVIA, Symphony, or Definitive Healthcare) for more current prescribing data? This significantly changes the cost structure.</li></ol>
+<ol><li><strong>Target market:</strong> Is this being built as an internal tool for one sales organization, or as a SaaS product sold to multiple pharma/device companies? This changes the multi-tenancy requirements, pricing model, and compliance obligations substantially.</li></ol>
+<ol><li><strong>Mobile platform priority:</strong> iOS first, or iOS and Android simultaneously? Native apps or React Native / Flutter cross-platform?</li></ol>
+<ol><li><strong>Email integration:</strong> Do reps want emails they send to physicians auto-logged in the CRM? This requires integration with Gmail/Outlook and adds significant scope.</li></ol>
+<ol><li><del><strong>Mapping provider:</strong> Google Maps vs. Mapbox vs. Apple Maps?</del> <em>(Resolved in v1.1 — no routing API required for v1. Geocoding still uses Google Maps or Mapbox; see RISK-003.)</em></li></ol>
+<ol><li><strong>Existing CRM:</strong> Is there an existing CRM (Salesforce, Veeva, HubSpot) that this needs to integrate with, or is this replacing one?</li></ol>
+<ol><li><strong>Sample management compliance:</strong> Some regulated sample distribution requires FDA-compliant e-signature and chain-of-custody tracking. Is pharmaceutical sample management in scope, or just internal tracking?</li></ol>
+<ol><li><strong>International scope:</strong> US only for now, or will international markets (Canada, EU) be required? This changes data sourcing completely.</li></ol>
+<ol><li><em>(New — v1.1)</em> <strong>AI prompt export admin toggle:</strong> Should organizations be able to disable the AI prompt export feature for reps on networks with strict data handling policies? If yes, this requires an admin configuration setting.</li></ol>
+<hr>
+<p><em>Prepared by Dennis Reynolds, Project Manager</em>   <em>This is the plan. It's a good plan. Follow it.</em></p>
+
+</div>
+<div class="footer">Medical Sales Intelligence &amp; CRM Platform — PRD v1.1 &nbsp;|&nbsp; Dennis Reynolds, Project Manager &nbsp;|&nbsp; February 26, 2026</div>
+</body>
+</html>
