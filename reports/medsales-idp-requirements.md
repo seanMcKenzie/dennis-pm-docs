@@ -2,8 +2,8 @@
 
 **Prepared by:** Dennis Reynolds, Project Manager  
 **Date:** February 28, 2026  
-**Version:** 1.1  
-**Status:** Updated — Token Cost Breakdown Added  
+**Version:** 1.0  
+**Status:** Draft — Pending Engineering Review  
 **Linked PRD:** medical-sales-platform-prd.md v1.1  
 **References:** NFR-015 (MFA + SSO), NFR-016 (RBAC), NFR-017 (API keys), NFR-018 (audit logs), NFR-019 (org isolation)
 
@@ -466,55 +466,16 @@ Charlie is our sole developer for the MedSales platform. The IdP is a significan
 
 **Total Build: 544 hours (~14 weeks at full dedication, or ~6 months alongside platform development)**
 
-#### 4.2.2 Charlie's Actual Cost — Claude API Token Consumption
+#### 4.2.2 Cost at Charlie's Rate
 
-**Important clarification (added v1.1):** Charlie is an AI coding agent running on the Claude API (Anthropic). "Developer cost" for Charlie is not an hourly rate — it is Claude API token consumption. This changes the economics significantly.
+| Scenario | Hours | Rate | Cost |
+|---|---|---|---|
+| Phase 1 only | 400 | $150/hr | $60,000 |
+| Phase 1 + Phase 2 | 544 | $150/hr | $81,600 |
+| Phase 1 only | 400 | $200/hr | $80,000 |
+| Phase 1 + Phase 2 | 544 | $200/hr | $108,800 |
 
-**Claude Sonnet Pricing (current as of Q1 2026):**
-- Input tokens: **$3.00 / million**
-- Output tokens: **$15.00 / million**
-
-AI coding agents are input-heavy — Charlie reads existing code, architectural context, and requirements before writing anything. Estimated input/output ratio: ~65% input / 35% output.
-
-**Token Consumption Estimates by Phase:**
-
-| Phase | What Charlie Does | Est. Input Tokens | Est. Output Tokens | Est. Cost |
-|---|---|---|---|---|
-| Phase 1 — Core IdP | OAuth 2.0, OIDC, JWT, MFA, RBAC, API keys, audit log, sessions, password policy | 80–150M | 30–60M | **$690–$1,350** |
-| Phase 2 — SAML 2.0 | SAML IdP, SP config UI, JIT provisioning, SAML→OAuth bridge, SLO | 30–60M | 15–25M | **$285–$555** |
-| Testing & Debugging | Unit tests, integration tests, OAuth flow testing, iteration cycles | 40–80M | 15–30M | **$345–$690** |
-| **Phase 1 + 2 Total** | | **150–290M** | **60–115M** | **~$1,300–$2,600** |
-
-**With 50% buffer for iteration and debugging overruns:** ~$2,000–$3,900
-
-**How This Compares to the Initial Estimate:**
-
-The v1.0 report used a $175/hr human developer blended rate — a standard industry benchmark — to produce a Phase 1 cost of ~$70,000–$87,500. That was the right number to use before Charlie's nature was factored in.
-
-Charlie's actual projected cost: **~$1,300–$2,600 for Phases 1 and 2 combined.**
-
-That is correct. That is not a typo. That is the economics of AI-native development.
-
-**Important caveats:**
-1. Token estimates can run over if Charlie hits errors and iterates heavily. The 50% buffer above accounts for this.
-2. Bad prompts, unclear specs, and ambiguous requirements multiply token consumption. The functional requirements in this document exist precisely to prevent that.
-3. The security pen test (RISK-IDP-001) still requires a human third-party firm. That is a real cost and is non-negotiable.
-4. AWS infrastructure, monitoring, and operational costs are separate (see Section 4.2.4).
-
-**Revised Phase 1 Total Cost Estimate (AI-native development):**
-
-| Line Item | Cost |
-|---|---|
-| Charlie — Claude API tokens (Phase 1) | $700–$1,350 |
-| Charlie — Claude API tokens (Phase 2) | $285–$555 |
-| Testing/debug token buffer (50%) | $500–$950 |
-| Third-party security pen test (mandatory) | $5,000–$15,000 |
-| AWS infrastructure (Phase 1, 6 months) | $2,250–$3,900 |
-| **Revised Phase 1 + 2 Total (all-in)** | **~$8,700–$21,700** |
-
-> For comparison: Auth0 Enterprise at 50K MAU costs $96,000 in Year 2 alone. Charlie builds the whole IdP for less than Auth0's cheapest enterprise quarter.
-
-> ~~Charlie's rate will drive this number. Adjust accordingly. At $150/hr, Phase 1 is $60K. At $200/hr, it's $80K.~~ *(Superseded — see above.)*
+> Charlie's rate will drive this number. Adjust accordingly. At $150/hr, Phase 1 is $60K. At $200/hr, it's $80K. Either way, it's less than one year of Auth0 Enterprise at 50K MAU.
 
 #### 4.2.3 Ongoing Maintenance
 
@@ -553,43 +514,37 @@ The IdP runs as a separate service cluster from the main MedSales application.
 Assumptions:
 - Growth: 10K MAU at launch, 50K MAU by end of Year 2, 100K MAU by Year 3
 - SAML / enterprise SSO required from Year 2 onward
-- **Charlie's cost = Claude API token consumption** (not hourly rate — see Section 4.2.2)
+- Charlie's rate: $175/hr (midpoint)
 - Auth0/Okta CIC: Enterprise tier required from Year 2 (SAML)
 - Build cost amortized: Phase 1 in Year 1, Phase 2 in Year 2
-- Pen test included in Year 1 build cost
-- Maintenance cost = ongoing Charlie token usage for patches/updates + DevOps time
 
-| Cost Category | Auth0 (3-Year) | AWS Cognito (3-Year) | Build — AI-Native (3-Year) |
+| Cost Category | Auth0 (3-Year) | AWS Cognito (3-Year) | Build (3-Year) |
 |---|---|---|---|
 | **Year 1 — 10K MAU, no SAML** | | | |
-| License / Build | $7,800 | $6,000 | **$1,350** (Phase 1 tokens) |
-| Security pen test | Included | Included | $10,000 (mandatory, non-negotiable) |
+| License / Build | $7,800 | $6,000 | $70,000 (Phase 1 dev) |
 | Infrastructure | Included | Included | $5,500 |
-| Maintenance tokens | Included | Included | $0 (first year, dev team owns it) |
-| **Year 1 Total** | **$7,800** | **$6,000** | **$16,850** |
+| Maintenance | Included | Included | $0 (first year, dev team owns it) |
+| **Year 1 Total** | **$7,800** | **$6,000** | **$75,500** |
 | **Year 2 — 50K MAU, SAML enabled** | | | |
-| License / Build | $96,000 (Enterprise) | $30,000 | **$555** (Phase 2 tokens) |
+| License / Build | $96,000 (Enterprise) | $30,000 | $25,200 (Phase 2 dev, 144 hrs) |
 | Infrastructure | Included | Included | $6,500 |
-| Maintenance (Charlie tokens + ops) | Included | Included | $2,400 |
-| **Year 2 Total** | **$96,000** | **$30,000** | **$9,455** |
+| Maintenance | Included | Included | $30,000 |
+| **Year 2 Total** | **$96,000** | **$30,000** | **$61,700** |
 | **Year 3 — 100K MAU, SAML, full features** | | | |
 | License / Build | $144,000+ (Enterprise) | $63,000 | $0 (no new build) |
 | Infrastructure | Included | Included | $7,500 |
-| Maintenance (Charlie tokens + ops) | Included | Included | $2,400 |
-| **Year 3 Total** | **$144,000+** | **$63,000** | **$9,900** |
+| Maintenance | Included | Included | $33,000 |
+| **Year 3 Total** | **$144,000+** | **$63,000** | **$40,500** |
 | | | | |
-| **3-Year TCO** | **$247,800+** | **$99,000** | **$36,205** |
-| **Break-even vs. Auth0** | — | — | **~Month 3** |
-| **Break-even vs. Cognito** | — | — | **~Month 7** |
-
-> ⚠️ **v1.1 Revision Note:** The original TCO table used a $175/hr blended developer rate for Charlie ($75,500 Year 1, $177,700 3-year total). Those numbers are superseded. Charlie is an AI agent. His actual token cost is a rounding error compared to Auth0 licensing. The pen test and AWS infrastructure are now the dominant cost items.
+| **3-Year TCO** | **$247,800+** | **$99,000** | **$177,700** |
+| **Break-even vs. Auth0** | — | — | **~Month 20** |
+| **Break-even vs. Cognito** | — | — | **~Month 36** |
 
 **Key observations:**
 1. Auth0 becomes dramatically more expensive when SAML is needed — and it will be needed for enterprise pharma customers.
 2. Cognito is cheap on paper but cannot serve as a SAML IdP outbound (critical Phase 2 gap). Cognito would require building SAML separately anyway, making the "build" costs comparable while retaining all the Cognito limitations.
-3. The build option now has a **lower Year 1 cost** than Auth0 even including the mandatory pen test. Break-even against Auth0 occurs in the first quarter. Against Cognito, within 7 months.
-4. The dominant cost in the build scenario is **the pen test and AWS infrastructure** — not development. This is a fundamentally different economic model than traditional software development.
-5. The build option is the correct long-term choice for multiple reasons: SAML requirement, multi-tenancy complexity, complete control over token claims and security policy, and now — dramatically lower total cost.
+3. The build option has the highest Year 1 cost (development) but the lowest Year 3 cost. Break-even against Auth0 occurs around Month 20.
+4. The build option is the correct long-term choice given the SAML requirement, multi-tenancy complexity, and the need for complete control over token claims and security policy.
 
 ---
 
